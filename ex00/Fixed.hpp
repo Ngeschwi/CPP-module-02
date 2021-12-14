@@ -9,8 +9,8 @@
 class Fixed
 {
 	private:
-		int			nbr;
-		static int	nbr_bits;
+		int					nbr;
+		const static int	nbr_bits = 8;
 
 	public:
 		Fixed(void);
