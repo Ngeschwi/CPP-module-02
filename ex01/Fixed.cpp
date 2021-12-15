@@ -1,20 +1,24 @@
 #include "Fixed.hpp"
 
+const int Fixed::nbr_bits = 8;
+
 Fixed::Fixed(void) : nbr(0)
 {
 	std::cout << "Default constructor called" << std::endl;
 	return ;
 }
 
-Fixed::Fixed(const int nbr) : nbr(nbr)
+Fixed::Fixed(const int nbr)
 {
-	std::cout << "Default constructor called" << std::endl;
+	std::cout << "Int constructor called" << std::endl;
+	this->setRawBits(nbr * pow(2, this->nbr_bits));
 	return ;
 }
 
-Fixed::Fixed(const int nbr) : nbr(nbr)
+Fixed::Fixed(const float nbr)
 {
-	std::cout << "Default constructor called" << std::endl;
+	std::cout << "Float constructor called" << std::endl;
+	this->setRawBits(nbr * pow(2, this->nbr_bits));
 	return ;
 }
 
@@ -22,20 +26,21 @@ Fixed::Fixed(Fixed const & src)
 {
 	std::cout << "Copy  constructor called" << std::endl;
 	*this = src;
+	return ;
 }
 
-float	Fixed::toFloat(void)
+float	Fixed::toFloat(void) const
 {
-	return ;
+	return static_cast<float>(this->nbr) / pow(2, this->nbr_bits);
 }
-int	Fixed::toInt(void)
+
+int	Fixed::toInt(void) const
 {
-	return ;
+	return static_cast<int>(this->nbr) / pow(2, this->nbr_bits);
 }
 
 int	Fixed::getRawBits(void) const
 {
-	std::cout << "getRawBits member function called" << std::endl;
 	return this->nbr;
 }
 
@@ -57,4 +62,13 @@ Fixed::~Fixed(void)
 {
 	std::cout << "Destructor called" << std::endl;
 	return ;
+}
+
+std::ostream &	operator<<(std::ostream & o, Fixed const & rhs)
+{
+	float	nbr;
+
+	nbr = rhs.getRawBits() / pow(2, 8);
+	o << nbr;
+	return o ;
 }
