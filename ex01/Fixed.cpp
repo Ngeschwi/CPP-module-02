@@ -10,15 +10,21 @@ Fixed::Fixed(void) : nbr(0)
 
 Fixed::Fixed(const int nbr)
 {
+	float	save;
+
 	std::cout << "Int constructor called" << std::endl;
-	this->setRawBits(nbr * pow(2, this->nbr_bits));
+	save = roundf(nbr * pow(2, this->nbr_bits));
+	this->setRawBits(save);
 	return ;
 }
 
 Fixed::Fixed(const float nbr)
 {
+	float	save;
+
 	std::cout << "Float constructor called" << std::endl;
-	this->setRawBits(nbr * pow(2, this->nbr_bits));
+	save = roundf(nbr * pow(2, this->nbr_bits));
+	this->setRawBits(save);
 	return ;
 }
 
@@ -66,9 +72,6 @@ Fixed::~Fixed(void)
 
 std::ostream &	operator<<(std::ostream & o, Fixed const & rhs)
 {
-	float	nbr;
-
-	nbr = rhs.getRawBits() / pow(2, 8);
-	o << nbr;
+	o << rhs.toFloat();
 	return o ;
 }
